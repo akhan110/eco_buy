@@ -127,7 +127,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                         iconDisabledColor: Colors.grey,
                         alignment: Alignment.center,
                         borderRadius: BorderRadius.circular(10),
-                        value: selectedValue,
+                        value: rselectedValue,
                         items: categories
                             .map(
                               (e) => DropdownMenuItem<String>(
