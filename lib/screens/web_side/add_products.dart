@@ -154,8 +154,21 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                     if (v!.isEmpty) {
                       return "should not be empty";
                     }
+                    return null;
                   },
                   hintText: 'Enter product name',
+                ),
+                const SizedBox(height: 10),
+                EcoField(
+                  isFilledColor: true,
+                  controller: serialCodeC,
+                  validator: (v) {
+                    if (v!.isEmpty) {
+                      return "should not be empty";
+                    }
+                    return null;
+                  },
+                  hintText: 'Enter serial code',
                 ),
                 const SizedBox(height: 10),
                 EcoField(
@@ -166,6 +179,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                     if (v!.isEmpty) {
                       return "should not be empty";
                     }
+                    return null;
                   },
                   hintText: 'Enter product detail',
                 ),
@@ -177,6 +191,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                     if (v!.isEmpty) {
                       return "should not be empty";
                     }
+                    return null;
                   },
                   hintText: 'Enter product price',
                 ),
@@ -188,6 +203,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                     if (v!.isEmpty) {
                       return "should not be empty";
                     }
+                    return null;
                   },
                   hintText: 'Enter product discounted price',
                 ),
@@ -199,9 +215,26 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                     if (v!.isEmpty) {
                       return "should not be empty";
                     }
+                    return null;
                   },
                   hintText: 'Enter brand name',
                 ),
+                SwitchListTile(
+                    title: const Text('Is on sale'),
+                    value: isOnSale,
+                    onChanged: (value) {
+                      setState(() {
+                        isOnSale = !isOnSale;
+                      });
+                    }),
+                SwitchListTile(
+                    title: const Text('Is on sale'),
+                    value: isPopular,
+                    onChanged: (value) {
+                      setState(() {
+                        isPopular = !isPopular;
+                      });
+                    }),
                 EcoButton(
                   isLoading: isSaving,
                   onPress: () {
