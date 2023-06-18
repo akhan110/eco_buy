@@ -54,6 +54,9 @@ class _WebAdminScreenState extends State<WebAdminScreen> {
           title: const Text('ADMIN'),
         ),
         sideBar: SideBar(
+          width: 350,
+          textStyle: TextStyle(fontSize: 20, color: Colors.white),
+          backgroundColor: Colors.black,
           selectedRoute: WebAdminScreen.id,
           onSelected: (route) {
             chooseScreen(route);
