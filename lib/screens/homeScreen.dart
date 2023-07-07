@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eco_buy/services/firebase_services.dart';
 import 'package:eco_buy/utils/styles.dart';
@@ -28,6 +30,11 @@ class HomeScreen extends StatelessWidget {
       "https://cdn.pixabay.com/photo/2016/11/23/15/03/medications-1853400_960_720.jpg",
     ];
     return Scaffold(
+      appBar: AppBar(actions: [
+        IconButton(
+            onPressed: () => FirebaseServices.signOut(),
+            icon: Icon(Icons.logout))
+      ]),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(children: [

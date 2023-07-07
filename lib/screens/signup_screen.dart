@@ -23,7 +23,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   FocusNode? passwordFocus;
   bool formStateLoading = false;
-  FocusNode? retypePasswordFocus;
+  //FocusNode? retypePasswordFocus;
 
   @override
   void dispose() {
