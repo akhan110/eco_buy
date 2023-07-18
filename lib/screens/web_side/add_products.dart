@@ -69,14 +69,6 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                   },
                   isLoginButton: true,
                 ),
-                // EcoButton(
-                //   title: "UPLOAD IMAGES",
-                //   onPress: () {
-                //     uploadImages();
-                //   },
-                //   isLoading: isUploading,
-                //   isLoginButton: true,
-                // ),
                 Container(
                     height: 20.h,
                     decoration: BoxDecoration(
@@ -111,7 +103,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                             ],
                           );
                         })),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   width: double.infinity,
