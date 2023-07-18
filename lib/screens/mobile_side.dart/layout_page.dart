@@ -1,8 +1,5 @@
-import 'package:eco_buy/screens/landingPage.dart';
+import 'package:eco_buy/screens/mobile_side.dart/landingPage.dart';
 import 'package:eco_buy/screens/web_side/web_login_screen.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/widgets.dart';
 
 class LayoutPage extends StatelessWidget {

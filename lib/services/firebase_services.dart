@@ -10,6 +10,7 @@ class FirebaseServices {
     return result;
   }
 
+  //Create Account
   static Future<String?> createAccount(String email, String password) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -30,10 +31,12 @@ class FirebaseServices {
     }
   }
 
+//Sign Out
   static Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 
+//SignIn Account
   static Future<String?> signInAccount(String email, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(

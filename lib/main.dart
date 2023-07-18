@@ -1,6 +1,4 @@
-import 'package:eco_buy/screens/landingPage.dart';
-import 'package:eco_buy/screens/layout_page.dart';
-import 'package:eco_buy/screens/login_screen.dart';
+import 'package:eco_buy/screens/mobile_side.dart/layout_page.dart';
 import 'package:eco_buy/screens/web_side/cart_items.dart';
 import 'package:eco_buy/screens/web_side/delete_products.dart';
 import 'package:eco_buy/screens/web_side/update_products.dart';
@@ -45,7 +43,7 @@ class MyApp extends StatelessWidget {
           routes: {
             WebLoginScreen.id: (context) => WebLoginScreen(),
             WebAdminScreen.id: (context) => WebAdminScreen(),
-            UpdateProductsScreen.id: (context) => UpdateProductsScreen(),
+            UpdateProductsScreen.id: (context) => const UpdateProductsScreen(),
             DeleteProductScreen.id: (context) => const DeleteProductScreen(),
             CartItemsScreen.id: (context) => CartItemsScreen(),
           },

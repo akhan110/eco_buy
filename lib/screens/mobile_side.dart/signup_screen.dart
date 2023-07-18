@@ -1,29 +1,36 @@
-import 'package:eco_buy/screens/homeScreen.dart';
-import 'package:eco_buy/screens/signup_screen.dart';
+import 'package:eco_buy/services/firebase_services.dart';
 import 'package:eco_buy/utils/styles.dart';
 import 'package:eco_buy/widgets/eco_button.dart';
+import 'package:eco_buy/widgets/ecotextfeild.dart';
 import 'package:flutter/material.dart';
 
-import '../services/firebase_services.dart';
-import '../widgets/ecotextfeild.dart';
-
-class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   TextEditingController emailC = TextEditingController();
 
   TextEditingController passwordC = TextEditingController();
 
+  TextEditingController retypePasswordC = TextEditingController();
   final formkey = GlobalKey<FormState>();
 
+  FocusNode? passwordFocus;
   bool formStateLoading = false;
+  //FocusNode? retypePasswordFocus;
 
   @override
+  void dispose() {
+    emailC.dispose();
+    passwordC.dispose();
+    retypePasswordC.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     Future<void> ecoDialogue(String error) async {
       showDialog(
@@ -55,22 +62,29 @@ class _LoginScreenState extends State<LoginScreen> {
           formStateLoading = true;
         });
 
-        String? accountStatus =
-            await FirebaseServices.signInAccount(emailC.text, passwordC.text);
-        if (accountStatus == null) {
-          setState(() {
-            formStateLoading = false;
-          });
-        }
+        if (passwordC.text == retypePasswordC.text) {
+          String? accountStatus =
+              await FirebaseServices.createAccount(emailC.text, passwordC.text);
+          if (accountStatus == null) {
+            setState(() {
+              formStateLoading = false;
+            });
+            ecoDialogue('SIGNUP SUCCESSFULL');
+          }
+          ecoDialogue(accountStatus.toString());
+          if (accountStatus != null) {
+            ecoDialogue(accountStatus);
+            setState(() {
+              formStateLoading = false;
+            });
+          } else {
+            Navigator.pop(context);
+          }
 
-        if (accountStatus != null) {
-          ecoDialogue(accountStatus);
-          setState(() {
-            formStateLoading = false;
-          });
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (_) => LoginScreen()));
         } else {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+          ecoDialogue('Not valid credentials');
         }
       }
     }
@@ -84,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const SizedBox(height: 0),
               const Text(
-                'WELCOME, \n please login first',
+                'WELCOME,\nplease Create Your Account',
                 style: EcoStyle.kBoldStyle,
                 textAlign: TextAlign.center,
               ),
@@ -116,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             isFilledColor: true,
                             filledColor: Colors.grey.withOpacity(0.2),
                             controller: passwordC,
-                            pass: true,
+                            pass: false,
                             hintText: 'Enter password',
                             validator: (p0) {
                               if (p0!.isEmpty) {
@@ -125,13 +139,27 @@ class _LoginScreenState extends State<LoginScreen> {
                               return null;
                             },
                           ),
+                          const SizedBox(height: 10),
+                          EcoField(
+                            isFilledColor: true,
+                            filledColor: Colors.grey.withOpacity(0.2),
+                            controller: retypePasswordC,
+                            hintText: 'Retype password',
+                            validator: (p0) {
+                              if (p0!.isEmpty) {
+                                return "password should not be empty";
+                              }
+                              return null;
+                            },
+                            pass: false,
+                          ),
                           EcoButton(
-                            title: "LOGIN",
-                            isLoginButton: true,
-                            isLoading: formStateLoading,
                             onPress: () {
                               submit();
                             },
+                            isLoading: formStateLoading,
+                            title: "SIGNUP",
+                            isLoginButton: true,
                           ),
                         ],
                       ),
@@ -140,16 +168,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.only(bottom: 50),
                 child: EcoButton(
-                  title: "CREATE NEW ACCOUNT",
+                  title: "BACK TO LOGIN",
                   isLoginButton: false,
                   onPress: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SignupScreen(),
-                        ));
+                    Navigator.pop(context);
                   },
                 ),
               ),
@@ -160,3 +184,28 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+// submit() async {
+//     if (formkey.currentState!.validate()) {
+//       setState(() {
+//         formStateLoading = true;
+//       });
+//       if (passwordC.text == retypepasswordC.text) {
+//         String? accountstatus =
+//             await FirebaseServices.createAccount(emailC.text, passwordC.text);
+
+//         //print(accountstatus);
+//         if (accountstatus != null) {
+//           ecoDialogue(accountstatus);
+//           setState(() {
+//             formStateLoading = false;
+//           });
+//         } else {!11
+//           Navigator.pop(context);
+//         }
+
+//         //  Navigator.push(
+//         //       context, MaterialPageRoute(builder: (_) => LoginScreen()));
+
+//       }
+//     }
+//   }

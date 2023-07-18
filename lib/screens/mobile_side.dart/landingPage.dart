@@ -1,5 +1,5 @@
-import 'package:eco_buy/screens/homeScreen.dart';
-import 'package:eco_buy/screens/login_screen.dart';
+import 'package:eco_buy/screens/mobile_side.dart/homeScreen.dart';
+import 'package:eco_buy/screens/mobile_side.dart/login_screen.dart';
 import 'package:eco_buy/utils/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,10 +34,10 @@ class LandingScreen extends StatelessWidget {
                   if (user == null) {
                     return LoginScreen();
                   } else {
-                    return HomeScreen();
+                    return const HomeScreen();
                   }
                 }
-                return Scaffold(
+                return const Scaffold(
                   body: Center(
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -53,7 +53,7 @@ class LandingScreen extends StatelessWidget {
               });
         }
 
-        return Scaffold(
+        return const Scaffold(
           body: Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
