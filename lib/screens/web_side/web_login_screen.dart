@@ -92,7 +92,7 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
                     filledColor: Colors.grey.withOpacity(0.2),
                     controller: userC,
                     hintText: 'Enter User id',
-                    validator: (p0) {
+                    validate: (p0) {
                       if (p0!.isEmpty) {
                         return "enter user id";
                       }
@@ -109,7 +109,7 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
                     controller: pwdC,
                     pass: true,
                     hintText: 'Enter password',
-                    validator: (p0) {
+                    validate: (p0) {
                       if (p0!.isEmpty) {
                         return "password should not be empty";
                       }

@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             filledColor: Colors.grey.withOpacity(0.2),
                             controller: emailC,
                             hintText: 'Enter Email',
-                            validator: (p0) {
+                            validate: (p0) {
                               if (p0!.isEmpty ||
                                   !p0.contains("@") ||
                                   !p0.contains(".com")) {
@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             controller: passwordC,
                             pass: true,
                             hintText: 'Enter password',
-                            validator: (p0) {
+                            validate: (p0) {
                               if (p0!.isEmpty) {
                                 return "password should not be empty";
                               }

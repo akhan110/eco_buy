@@ -115,7 +115,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             filledColor: Colors.grey.withOpacity(0.2),
                             controller: emailC,
                             hintText: 'Enter Email',
-                            validator: (p0) {
+                            validate: (p0) {
                               if (p0!.isEmpty ||
                                   !p0.contains("@") ||
                                   !p0.contains(".com")) {
@@ -132,7 +132,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             controller: passwordC,
                             pass: false,
                             hintText: 'Enter password',
-                            validator: (p0) {
+                            validate: (p0) {
                               if (p0!.isEmpty) {
                                 return "password should not be empty";
                               }
@@ -145,7 +145,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             filledColor: Colors.grey.withOpacity(0.2),
                             controller: retypePasswordC,
                             hintText: 'Retype password',
-                            validator: (p0) {
+                            validate: (p0) {
                               if (p0!.isEmpty) {
                                 return "password should not be empty";
                               }

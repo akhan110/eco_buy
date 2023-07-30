@@ -63,6 +63,7 @@ class EcoField extends StatelessWidget {
     this.txtweight = FontWeight.w500,
     this.hintweight = FontWeight.w500,
     this.hintColor = Colors.grey,
+    required String? Function(dynamic v) validate,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

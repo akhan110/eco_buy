@@ -1,8 +1,7 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eco_buy/models/productsModel.dart';
 import 'package:eco_buy/widgets/eco_button.dart';
+import 'package:eco_buy/widgets/eco_dialogue.dart';
 import 'package:eco_buy/widgets/ecotextfeild.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -55,7 +54,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
       child: Container(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
             child: Column(
               children: [
                 const Text(
@@ -70,39 +69,45 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                   isLoginButton: true,
                 ),
                 Container(
-                    height: 20.h,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.4),
-                      borderRadius: BorderRadius.circular(20),
+                  height: 20.h,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.4),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
                     ),
-                    child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 5,
-                        ),
-                        itemCount: imageList.length,
-                        itemBuilder: (BuildContext context, index) {
-                          return Stack(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Image.network(
-                                  File(imageList[index].path).path,
-                                  width: 200,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      imageList.removeAt(index);
-                                    });
-                                  },
-                                  icon: const Icon(Icons.cancel))
-                            ],
-                          );
-                        })),
+                    itemCount: imageList.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Image.network(
+                              //image path and directory path
+                              File(imageList[index].path).path,
+                              width: 200,
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  imageList.removeAt(index);
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.cancel,
+                                color: Colors.white,
+                              )),
+                        ],
+                      );
+                    },
+                  ),
+                ),
                 const SizedBox(height: 15),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -142,7 +147,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                 EcoField(
                   isFilledColor: true,
                   controller: productNameC,
-                  validator: (v) {
+                  validate: (v) {
                     if (v!.isEmpty) {
                       return "should not be empty";
                     }
@@ -154,7 +159,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                 EcoField(
                   isFilledColor: true,
                   controller: serialCodeC,
-                  validator: (v) {
+                  validate: (v) {
                     if (v!.isEmpty) {
                       return "should not be empty";
                     }
@@ -167,7 +172,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                   isFilledColor: true,
                   minLines: 5,
                   controller: detailC,
-                  validator: (v) {
+                  validate: (v) {
                     if (v!.isEmpty) {
                       return "should not be empty";
                     }
@@ -179,7 +184,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                 EcoField(
                   isFilledColor: true,
                   controller: priceC,
-                  validator: (v) {
+                  validate: (v) {
                     if (v!.isEmpty) {
                       return "should not be empty";
                     }
@@ -191,7 +196,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                 EcoField(
                   isFilledColor: true,
                   controller: discountPriceC,
-                  validator: (v) {
+                  validate: (v) {
                     if (v!.isEmpty) {
                       return "should not be empty";
                     }
@@ -203,7 +208,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                 EcoField(
                   isFilledColor: true,
                   controller: brandC,
-                  validator: (v) {
+                  validate: (v) {
                     if (v!.isEmpty) {
                       return "should not be empty";
                     }
@@ -233,7 +238,7 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                     save();
                   },
                   title: 'SAVE',
-                )
+                ),
               ],
             ),
           ),
@@ -268,8 +273,10 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
         imageUrls.clear();
         imageList.clear();
         clearFields();
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("ADDED SUCCESSFULLY")));
+        const SnackBar(
+            content: EcoDialog(
+          title: 'Added Sucessfully',
+        ));
       });
     });
     // await FirebaseFirestore.instance
@@ -294,6 +301,8 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
   pickImage() async {
     final List<XFile> pickImage = await imagePicker.pickMultiImage();
     if (pickImage != null) {
+      print('image pick = ${pickImage[0].path}');
+      print('image pick = ${pickImage[0].name}');
       setState(() {
         imageList.addAll(pickImage);
       });
@@ -308,10 +317,16 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
     });
     String urls;
     Reference ref =
+        //ref .child("images means name of folder will be images")
+        //mene ek location bnadi ha storage k andr, k firestore ka instance create kre usme ek images
+        //k naam se folders banaye aur saari images save hoajye
         FirebaseStorage.instance.ref().child("images").child(imageFile!.name);
     if (kIsWeb) {
+      //Every file will be converted into bytes
       await ref.putData(await imageFile.readAsBytes());
+      //type of data
       SettableMetadata(contentType: "image/jpeg");
+      //get urls because colud storage can save data but cloud firestore cant store data so we send links as wel
       urls = await ref.getDownloadURL();
       setState(() {
         isUploading = false;
